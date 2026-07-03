@@ -32,18 +32,22 @@ Rules:
 
 type ClientMessage = { role: "user" | "assistant"; content: string };
 
-export async function POST(req: Request) {
-  if (!assistantEnabled()) {
-    return Response.json(
-      {
-        error: "offline",
-        message:
-          "The AI assistant is not configured. Set AI_PROVIDER and the matching API key to enable it.",
-      },
-      { status: 503 },
-    );
-  }
+function plainText(text: string) {
+  return new Response(text, {
+    headers: { "Content-Type": "text/plain; charset=utf-8", "X-Citations": "[]" },
+  });
+}
 
+/** Greetings and filler get a friendly nudge, not the refusal line. */
+const SMALL_TALK =
+  /^(hi+|hey+|hello+|hellow+|yo|sup|hmm+|huh|ok(ay)?|thanks?|thank you|test(ing)?|what\??|why\??|cool|nice|wow)[\s!.?]*$/i;
+
+const GREETING_REPLY =
+  "Hey! I'm the assistant for Imtiaz's portfolio, grounded in his projects, research, and experience. " +
+  'Ask me something specific, for example: "Tell me about BRACU Vault", ' +
+  '"Explain the brain tumor segmentation project", or "What\'s his experience with NLP?"';
+
+export async function POST(req: Request) {
   const ip =
     req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
     req.headers.get("x-real-ip") ??
@@ -69,14 +73,31 @@ export async function POST(req: Request) {
   }
   const query = lastUser.content.slice(0, 1000);
 
+  // Small talk never needs the model or retrieval; answer it even offline.
+  if (SMALL_TALK.test(query.trim())) {
+    return plainText(GREETING_REPLY);
+  }
+
+  if (!assistantEnabled()) {
+    return Response.json(
+      {
+        error: "offline",
+        message:
+          "The AI assistant is not configured. Set AI_PROVIDER and the matching API key to enable it.",
+      },
+      { status: 503 },
+    );
+  }
+
   // Retrieve grounding context (hybrid when embeddings + key available).
   const queryEmbedding = await embedQuery(query);
   const chunks = retrieve(query, queryEmbedding, 6);
 
   if (chunks.length === 0) {
-    return new Response(
-      "I don't have verified information about that yet.",
-      { headers: { "Content-Type": "text/plain; charset=utf-8", "X-Citations": "[]" } },
+    return plainText(
+      "I don't have verified information about that yet. Try asking about one of " +
+        "Imtiaz's projects (BRACU Vault, Polaris, brain tumor segmentation), his " +
+        "research, or his skills and experience.",
     );
   }
 
@@ -92,8 +113,8 @@ export async function POST(req: Request) {
   }));
 
   const model = getModel()!;
+  // AI SDK v7: the system prompt goes in `instructions`, never in messages.
   const modelMessages: ModelMessage[] = [
-    { role: "system", content: SYSTEM },
     ...messages.slice(0, -1).map((m) => ({ role: m.role, content: m.content }) as ModelMessage),
     {
       role: "user",
@@ -101,24 +122,53 @@ export async function POST(req: Request) {
     },
   ];
 
-  try {
-    const result = streamText({
-      model,
-      messages: modelMessages,
-      temperature: 0.3,
-      maxOutputTokens: 700,
-    });
-    const response = result.toTextStreamResponse();
-    // Attach citations for the client to render as chips.
-    response.headers.set("X-Citations", encodeURIComponent(JSON.stringify(citations)));
-    response.headers.set("X-Provider", resolveProvider());
-    return response;
-  } catch {
-    return Response.json(
-      { error: "provider_error", message: "The assistant hit an error. Please try again." },
-      { status: 502 },
-    );
-  }
+  const result = streamText({
+    model,
+    instructions: SYSTEM,
+    messages: modelMessages,
+    temperature: 0.3,
+    maxOutputTokens: 700,
+  });
+
+  // Stream manually so a provider failure (bad key, retired model id, quota)
+  // becomes a readable message instead of an empty bubble that hangs forever.
+  const encoder = new TextEncoder();
+  const stream = new ReadableStream<Uint8Array>({
+    async start(controller) {
+      let emitted = false;
+      try {
+        for await (const delta of result.textStream) {
+          emitted = true;
+          controller.enqueue(encoder.encode(delta));
+        }
+        if (!emitted) {
+          controller.enqueue(
+            encoder.encode(
+              "The model returned an empty response. Please try again in a moment.",
+            ),
+          );
+        }
+      } catch (err) {
+        console.error("[assistant] provider stream error:", err);
+        controller.enqueue(
+          encoder.encode(
+            emitted
+              ? "\n\n(The response was cut off by a provider error. Please try again.)"
+              : "The AI provider rejected the request (this usually means the API key or model id needs updating). Please try again later.",
+          ),
+        );
+      }
+      controller.close();
+    },
+  });
+
+  return new Response(stream, {
+    headers: {
+      "Content-Type": "text/plain; charset=utf-8",
+      "X-Citations": encodeURIComponent(JSON.stringify(citations)),
+      "X-Provider": resolveProvider(),
+    },
+  });
 }
 
 export async function GET() {

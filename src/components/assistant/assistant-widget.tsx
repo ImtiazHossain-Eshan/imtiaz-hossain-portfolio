@@ -134,6 +134,18 @@ export function AssistantWidget() {
             });
           }
         }
+
+        // Never leave a bubble hanging on "…" if the stream produced nothing.
+        if (!acc.trim()) {
+          setMessages((m) => {
+            const copy = [...m];
+            copy[copy.length - 1] = {
+              role: "assistant",
+              content: "I could not generate a response just now. Please try again.",
+            };
+            return copy;
+          });
+        }
       } catch {
         setMessages((m) => [
           ...m,

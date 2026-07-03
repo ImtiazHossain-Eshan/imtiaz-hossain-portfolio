@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
@@ -53,7 +53,21 @@ export function NeuralFieldScene({ quality }: { quality: FieldQuality }) {
   const groupRef = useRef<THREE.Group>(null);
 
   const camera = useThree((s) => s.camera);
-  const pointer = useThree((s) => s.pointer);
+
+  // Track the pointer at window level: hero copy sits above the canvas and
+  // would swallow its pointer events, which made the field feel unresponsive.
+  // Target is written by the listener; `smooth` is lerped every frame.
+  const pointerTarget = useRef({ x: 0, y: 0 });
+  const pointerSmooth = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const onMove = (e: PointerEvent) => {
+      pointerTarget.current.x = (e.clientX / window.innerWidth) * 2 - 1;
+      pointerTarget.current.y = -((e.clientY / window.innerHeight) * 2 - 1);
+    };
+    window.addEventListener("pointermove", onMove, { passive: true });
+    return () => window.removeEventListener("pointermove", onMove);
+  }, []);
 
   const glowTexture = useMemo(makeGlowTexture, []);
 
@@ -131,11 +145,17 @@ export function NeuralFieldScene({ quality }: { quality: FieldQuality }) {
     const { base, phase, speed, amp, edges, adjacency, edgeSeed } = field;
     const { positions, linePositions, lineColors, pulsePositions, pulseState } = buffers;
 
+    // Ease toward the latest pointer position: responsive but never jittery.
+    pointerSmooth.current.x += (pointerTarget.current.x - pointerSmooth.current.x) * 0.22;
+    pointerSmooth.current.y += (pointerTarget.current.y - pointerSmooth.current.y) * 0.22;
+    const px = pointerSmooth.current.x;
+    const py = pointerSmooth.current.y;
+
     // Project the pointer onto the z=0 plane the field lives around.
     const dist = camera.position.length();
     const halfH = Math.tan(THREE.MathUtils.degToRad(55 / 2)) * dist;
     const aspect = (camera as THREE.PerspectiveCamera).aspect ?? 1.6;
-    mouse3.set(pointer.x * halfH * aspect, pointer.y * halfH, 0);
+    mouse3.set(px * halfH * aspect, py * halfH, 0);
 
     // Particles: gentle triaxial drift + local repulsion from the pointer.
     for (let i = 0; i < COUNT; i++) {
@@ -177,7 +197,7 @@ export function NeuralFieldScene({ quality }: { quality: FieldQuality }) {
 
       let brightness =
         Math.max(0.06, 1 - restLen / CONNECT_DIST) *
-        0.3 *
+        0.26 *
         (0.75 + 0.45 * Math.sin(t * 0.6 + edgeSeed[e]));
 
       const mx = (ax + bx) / 2 - mouse3.x;
@@ -233,8 +253,8 @@ export function NeuralFieldScene({ quality }: { quality: FieldQuality }) {
     }
 
     // Slow observational camera drift with pointer parallax.
-    camera.position.x = Math.sin(t * 0.06) * 0.7 + pointer.x * 0.45;
-    camera.position.y = Math.cos(t * 0.05) * 0.35 + pointer.y * 0.3;
+    camera.position.x = Math.sin(t * 0.06) * 0.7 + px * 0.45;
+    camera.position.y = Math.cos(t * 0.05) * 0.35 + py * 0.3;
     camera.lookAt(0, 0, 0);
 
     if (groupRef.current) {
@@ -243,7 +263,8 @@ export function NeuralFieldScene({ quality }: { quality: FieldQuality }) {
   });
 
   return (
-    <group ref={groupRef}>
+    // Nudged right so the hero copy on the left sits over calmer space.
+    <group ref={groupRef} position={[1.8, 0, 0]}>
       <points ref={pointsRef}>
         <bufferGeometry>
           <bufferAttribute attach="attributes-position" args={[buffers.positions, 3]} />

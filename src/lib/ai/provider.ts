@@ -23,7 +23,7 @@ export function getModel(): LanguageModel | null {
     const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
     if (!apiKey) return null;
     return createGoogleGenerativeAI({ apiKey })(
-      process.env.AI_MODEL || "gemini-2.0-flash",
+      process.env.AI_MODEL || "gemini-2.5-flash",
     );
   }
 

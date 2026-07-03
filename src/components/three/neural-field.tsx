@@ -11,8 +11,8 @@ const NeuralFieldCanvas = dynamic(() => import("./neural-field-canvas"), {
   loading: () => null,
 });
 
-const DESKTOP: FieldQuality = { points: 620, maxEdges: 1700, pulses: 18 };
-const LITE: FieldQuality = { points: 320, maxEdges: 800, pulses: 10 };
+const DESKTOP: FieldQuality = { points: 560, maxEdges: 1400, pulses: 14 };
+const LITE: FieldQuality = { points: 300, maxEdges: 700, pulses: 8 };
 
 /**
  * The living neural network behind the hero. Renders a static ambient fallback
@@ -38,7 +38,7 @@ export function NeuralField({ className }: { className?: string }) {
       (nav.deviceMemory !== undefined && nav.deviceMemory <= 4) ||
       window.matchMedia("(pointer: coarse)").matches;
     setQuality(lite ? LITE : DESKTOP);
-    setDprMax(lite ? 1.3 : 1.75);
+    setDprMax(lite ? 1.25 : 1.5);
     setMode("on");
   }, []);
 
