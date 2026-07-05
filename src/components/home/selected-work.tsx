@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { projects } from "#velite";
 import { Reveal } from "@/components/motion/reveal";
+import { Parallax } from "@/components/motion/scroll";
 import { fig } from "@/lib/utils";
 import { cn } from "@/lib/utils";
 
@@ -48,27 +49,27 @@ export function SelectedWork() {
                 data-cursor-label="case study"
                 className="group grid items-center gap-8 md:grid-cols-12 md:gap-12"
               >
-                <div
-                  className={cn(
-                    "relative overflow-hidden rounded-xl border border-line bg-surface md:col-span-7",
-                    reversed && "md:order-2",
-                  )}
+                <Parallax
+                  speed={0.07}
+                  className={cn("md:col-span-7", reversed && "md:order-2")}
                 >
-                  {project.cover && (
-                    <Image
-                      src={project.cover}
-                      alt={`${project.title} interface`}
-                      width={1280}
-                      height={800}
-                      sizes="(max-width: 768px) 100vw, 58vw"
-                      className="h-auto w-full transition-transform duration-700 ease-out group-hover:scale-[1.025]"
-                      priority={i === 0}
-                    />
-                  )}
-                  <span className="label-mono absolute left-4 top-4 rounded-full border border-line-bright bg-bg/70 px-3 py-1 backdrop-blur-sm">
-                    fig. {fig(i + 1)} / {project.category}
-                  </span>
-                </div>
+                  <div className="relative overflow-hidden rounded-xl border border-line bg-surface">
+                    {project.cover && (
+                      <Image
+                        src={project.cover}
+                        alt={`${project.title} interface`}
+                        width={1280}
+                        height={800}
+                        sizes="(max-width: 768px) 100vw, 58vw"
+                        className="h-auto w-full transition-transform duration-700 ease-out group-hover:scale-[1.025]"
+                        priority={i === 0}
+                      />
+                    )}
+                    <span className="label-mono absolute left-4 top-4 rounded-full border border-line-bright bg-bg/70 px-3 py-1 backdrop-blur-sm">
+                      fig. {fig(i + 1)} / {project.category}
+                    </span>
+                  </div>
+                </Parallax>
 
                 <div className={cn("md:col-span-5", reversed && "md:order-1")}>
                   <p className="label-mono mb-3 text-accent/80">

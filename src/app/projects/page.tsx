@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { projects } from "#velite";
 import { ProjectIndex } from "@/components/projects/project-index";
-import { TextReveal } from "@/components/motion/text-reveal";
+import { PageHero } from "@/components/layout/page-hero";
 
 export const metadata: Metadata = {
   title: "Work",
@@ -25,12 +25,15 @@ export default function ProjectsPage() {
     }));
 
   return (
-    <div className="wrap pb-28 pt-36 md:pt-44">
-      <p className="label-mono mb-5">the logbook / {rows.length} entries</p>
-      <h1 className="mb-16 max-w-3xl text-5xl font-medium tracking-tight text-ink sm:text-6xl">
-        <TextReveal text="Every system tells a story." immediate />
-      </h1>
-      <ProjectIndex projects={rows} />
-    </div>
+    <>
+      <PageHero
+        preset="projects"
+        kicker={`the logbook / ${rows.length} entries`}
+        title="Every system tells a story."
+      />
+      <div className="wrap pb-28">
+        <ProjectIndex projects={rows} />
+      </div>
+    </>
   );
 }

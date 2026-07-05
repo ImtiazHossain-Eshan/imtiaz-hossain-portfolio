@@ -4,7 +4,7 @@ import { publications } from "#velite";
 import { MDXContent } from "@/components/mdx/mdx-content";
 import { BibtexBlock } from "@/components/research/bibtex-block";
 import { LabPlate } from "@/components/playground/lab-plate";
-import { TextReveal } from "@/components/motion/text-reveal";
+import { PageHero } from "@/components/layout/page-hero";
 import { Reveal } from "@/components/motion/reveal";
 import { site } from "@/lib/site";
 
@@ -27,17 +27,17 @@ export default function ResearchPage() {
   }));
 
   return (
-    <div className="pb-24 pt-36 md:pt-44">
+    <div className="pb-24">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <header className="wrap">
-        <p className="label-mono mb-5">research / {publications.length} publication</p>
-        <h1 className="max-w-4xl text-5xl font-medium tracking-tight text-ink sm:text-6xl">
-          <TextReveal text="Research notebook." immediate />
-        </h1>
-        <p className="mt-8 max-w-2xl text-lg leading-relaxed text-dim">
+      <PageHero
+        preset="research"
+        kicker={`research / ${publications.length} publication`}
+        title="Research notebook."
+      >
+        <p className="max-w-2xl text-lg leading-relaxed text-dim">
           Work in progress and in preparation, presented the way a research group would: abstract,
           figures, citation, and an honest account of what remains open. My full record lives on{" "}
           <a
@@ -50,7 +50,7 @@ export default function ResearchPage() {
           </a>
           .
         </p>
-      </header>
+      </PageHero>
 
       {publications.map((pub) => (
         <article key={pub.slug} id={pub.slug} className="wrap mt-20 scroll-mt-28">

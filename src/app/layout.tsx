@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { SmoothScroll } from "@/components/providers/smooth-scroll";
+import { ScrollProgress } from "@/components/motion/scroll";
 import { Cursor } from "@/components/ui/cursor";
 import { Nav } from "@/components/layout/nav";
 import { Footer } from "@/components/layout/footer";
@@ -94,6 +95,7 @@ export default function RootLayout({
         >
           Skip to content
         </a>
+        <ScrollProgress />
         <SmoothScroll>
           <Nav />
           <main id="main" className="flex-1">

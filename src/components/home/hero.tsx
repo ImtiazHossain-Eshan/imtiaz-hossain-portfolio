@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { NeuralField } from "@/components/three/neural-field";
+import { HeroVisual } from "@/components/home/hero-visual";
 import { Magnetic } from "@/components/motion/magnetic";
+import { CountUp } from "@/components/motion/count-up";
 import { site } from "@/lib/site";
 
 const roles = ["Computer Vision", "NLP", "Deep Learning", "Research", "Production Systems"];
@@ -24,7 +25,7 @@ export function Hero() {
 
   return (
     <section className="relative flex min-h-svh flex-col justify-end overflow-hidden">
-      <NeuralField className="absolute inset-0" />
+      <HeroVisual className="absolute inset-0" />
 
       {/* Readability scrims: strong on the left where the copy lives,
           light elsewhere so the field still breathes. */}
@@ -106,7 +107,7 @@ export function Hero() {
         <div className="wrap grid grid-cols-2 gap-x-8 gap-y-4 py-6 md:flex md:items-center md:justify-between">
           {telemetry.map((item) => (
             <div key={item.label} className="flex items-baseline gap-3">
-              <span className="font-mono text-xl text-ink md:text-2xl">{item.value}</span>
+              <CountUp value={item.value} className="font-mono text-xl text-ink md:text-2xl" />
               <span className="label-mono">{item.label}</span>
             </div>
           ))}

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { DomainExplorer } from "@/components/about/domain-explorer";
-import { TextReveal } from "@/components/motion/text-reveal";
+import { PageHero } from "@/components/layout/page-hero";
 import { Reveal } from "@/components/motion/reveal";
 import { site } from "@/lib/site";
 
@@ -26,16 +26,14 @@ const facts = [
 
 export default function AboutPage() {
   return (
-    <div className="pb-24 pt-36 md:pt-44">
-      <header className="wrap">
-        <p className="label-mono mb-5">about / the person behind the lab</p>
-        <h1 className="max-w-4xl text-4xl font-medium leading-[1.08] tracking-tight text-ink sm:text-6xl">
-          <TextReveal
-            text="I build intelligent systems, and I show my work."
-            immediate
-          />
-        </h1>
-        <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_20rem]">
+    <div className="pb-24">
+      <PageHero
+        preset="about"
+        kicker="about / the person behind the lab"
+        title="I build intelligent systems, and I show my work."
+        titleClassName="text-4xl leading-[1.08] sm:text-6xl"
+      >
+        <div className="grid gap-8 lg:grid-cols-[1fr_20rem]">
           <p className="max-w-2xl text-lg leading-relaxed text-dim">
             I am an AI Engineer and researcher at {site.university}, working across computer
             vision, NLP, deep learning, systems programming, cloud, and game development. What
@@ -52,7 +50,7 @@ export default function AboutPage() {
             ))}
           </dl>
         </div>
-      </header>
+      </PageHero>
 
       {/* Domain explorer */}
       <section className="wrap mt-20" aria-label="Areas of work">
