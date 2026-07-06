@@ -84,7 +84,10 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col">
+      {/* suppressHydrationWarning: browser extensions (e.g. ColorZilla's
+          cz-shortcut-listen) inject attributes onto <body> after SSR. This
+          suppresses only body's own attribute mismatch, not descendants. */}
+      <body className="flex min-h-full flex-col" suppressHydrationWarning>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
