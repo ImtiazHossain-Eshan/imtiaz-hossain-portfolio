@@ -52,8 +52,8 @@ const images: Entry[] = [
   { src: `${DESKTOP}/star_wars_gameplay.png`, dest: "projects/games/star-wars-gameplay.webp" },
   { src: `${DESKTOP}/A modest proposal_1_Main_menu.png`, dest: "projects/games/proposers-dilemma-menu.webp" },
   // Research figures
-  { src: `${DESKTOP}/Obscrowd_Research_1.png`, dest: "research/obscrowd/figure-1.webp" },
-  { src: `${DESKTOP}/Obscrowd_Research.png`, dest: "research/obscrowd/figure-2.webp" },
+  { src: `${DESKTOP}/Obscrowd_Research_1.png`, dest: "research/unlinkability/figure-1.webp" },
+  { src: `${DESKTOP}/Obscrowd_Research.png`, dest: "research/unlinkability/figure-2.webp" },
 ];
 
 /* ------------------------------------------------------------------ */

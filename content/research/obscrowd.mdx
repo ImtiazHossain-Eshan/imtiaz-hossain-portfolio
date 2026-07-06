@@ -1,11 +1,18 @@
 ---
-title: "Obscrowd: Multi-Portrait Biometric Unlinkability under Generative Editing"
-slug: obscrowd
+title: "Multi-Portrait Biometric Unlinkability under Generative Editing"
+slug: multi-portrait-unlinkability
 authors:
   - Imtiaz Hossain
 venue: Working paper
 year: 2026
 status: preprint
+restricted: true
+teaser: >
+  A privacy framework for biometric unlinkability in group photos under
+  generative editing: the aim is to keep an edited portrait from being
+  automatically re-linked to the real person it depicts, while the protected
+  image stays visually faithful to the original. Full methods, quantitative
+  results, and the write-up are withheld while the paper is in preparation.
 abstract: >
   Generative image editors can modify a portrait (changing pose, expression,
   background, or style) while leaving enough biometric detail in the edited
@@ -50,9 +57,9 @@ bibtex: |
 links:
   scholar: https://scholar.google.com/citations?user=CIjeZSsAAAAJ&hl=en
 figures:
-  - src: /assets/research/obscrowd/figure-1.webp
+  - src: /assets/research/unlinkability/figure-1.webp
     caption: "Original, protected, and the imperceptible perturbation (delta map at plus/minus 0.16). After an instruct-pix2pix smile edit, face-recognition similarity falls from 0.957 (unprotected) to 0.138 (protected)."
-  - src: /assets/research/obscrowd/figure-2.webp
+  - src: /assets/research/unlinkability/figure-2.webp
     caption: "Qualitative comparison against EditShield, ID-Protector, PhotoGuard, and diffusion purification. Reference, protected, and edited rows show Obscrowd disrupts re-linkable identity while keeping the protected image faithful."
 ---
 

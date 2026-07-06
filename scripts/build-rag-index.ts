@@ -71,10 +71,15 @@ function collect(): Chunk[] {
   for (const p of readJson<Doc & { url: string }>("projects.json")) {
     push("project", p.title, p.url, p.raw);
   }
-  for (const p of readJson<Doc & { url: string }>("publications.json")) {
-    push("research", p.title, p.url, p.raw);
+  for (const p of readJson<Doc & { url: string; restricted?: boolean; teaser?: string }>(
+    "publications.json",
+  )) {
+    // Restricted (in-preparation) papers: index only the public teaser, never
+    // the raw abstract/methods/results/name from the body.
+    push("research", p.title, p.url, p.restricted ? p.teaser ?? "" : p.raw);
   }
   for (const p of readJson<Doc & { url: string; draft?: boolean }>("posts.json")) {
+    if (p.draft) continue; // drafts aren't public; keep them out of the assistant
     push("blog", p.title, p.url, p.raw);
   }
   for (const d of readJson<Doc & { href?: string }>("docs.json")) {

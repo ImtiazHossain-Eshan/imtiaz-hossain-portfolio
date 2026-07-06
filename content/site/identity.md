@@ -11,8 +11,8 @@ across computer vision, natural language processing, image processing, deep
 learning, machine learning, full stack development, systems programming, cloud,
 and game development.
 
-His work spans AI research (including Obscrowd, a privacy framework for
-multi-portrait biometric unlinkability under generative editing), medical
+His work spans AI research (including a working paper on multi-portrait
+biometric unlinkability under generative editing), medical
 imaging (brain tumor segmentation and classification), NLP projects
 (AI-generated text detection, multi-class news topic classification),
 production-grade full stack platforms (BRACU Vault, Polaris, CampusSync,

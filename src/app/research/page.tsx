@@ -19,10 +19,11 @@ export default function ResearchPage() {
     "@context": "https://schema.org",
     "@type": "ScholarlyArticle",
     headline: pub.title,
-    abstract: pub.abstract,
+    // Restricted papers expose only the short teaser in structured data.
+    abstract: pub.restricted ? pub.teaser ?? "" : pub.abstract,
     author: pub.authors.map((name) => ({ "@type": "Person", name })),
     datePublished: String(pub.year),
-    keywords: pub.keywords.join(", "),
+    ...(pub.restricted ? {} : { keywords: pub.keywords.join(", ") }),
     inLanguage: "en",
   }));
 
@@ -38,8 +39,9 @@ export default function ResearchPage() {
         title="Research notebook."
       >
         <p className="max-w-2xl text-lg leading-relaxed text-dim">
-          Work in progress and in preparation, presented the way a research group would: abstract,
-          figures, citation, and an honest account of what remains open. My full record lives on{" "}
+          Work in progress and in preparation. Some of it stays under wraps while the papers are
+          being written — figures and a short summary here, the full account on publication. My
+          complete record lives on{" "}
           <a
             href={site.links.scholar}
             target="_blank"
@@ -69,89 +71,139 @@ export default function ResearchPage() {
             </h2>
             <p className="mt-4 text-sm text-dim">{pub.authors.join(", ")}</p>
 
-            {pub.keywords.length > 0 && (
-              <div className="mt-5 flex flex-wrap gap-2">
-                {pub.keywords.map((kw) => (
-                  <span
-                    key={kw}
-                    className="rounded-full border border-line px-3 py-1 font-mono text-[11px] text-faint"
-                  >
-                    {kw}
-                  </span>
-                ))}
-              </div>
-            )}
+            {pub.restricted ? (
+              <>
+                {/* Teaser only — the abstract, body, keywords, and citation are
+                    withheld while the paper is in preparation. */}
+                <Reveal className="mt-8">
+                  <p className="max-w-2xl text-[15px] leading-relaxed text-dim">
+                    {pub.teaser ??
+                      "Details for this working paper are withheld while it is in preparation."}
+                  </p>
+                </Reveal>
 
-            {/* Abstract */}
-            <Reveal className="mt-10">
-              <div className="grid gap-8 lg:grid-cols-[1fr_20rem]">
-                <div>
-                  <p className="label-mono mb-3">abstract</p>
-                  <p className="max-w-2xl text-[15px] leading-relaxed text-dim">{pub.abstract}</p>
+                {pub.figures.length > 0 && (
+                  <section className="mt-12" aria-label="Figures">
+                    <div className="grid gap-5 sm:grid-cols-2">
+                      {pub.figures.map((fig, i) => (
+                        <LabPlate
+                          key={fig.src}
+                          figure={{
+                            src: fig.src,
+                            caption: `fig. ${String(i + 1).padStart(2, "0")}`,
+                            plate: true,
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </section>
+                )}
+
+                <div className="mt-10 flex flex-wrap items-center gap-x-5 gap-y-3">
+                  <p className="label-mono text-faint">
+                    full paper in preparation — methods &amp; results on publication
+                  </p>
+                  {pub.links.scholar && (
+                    <a
+                      href={pub.links.scholar}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="label-mono text-accent underline underline-offset-4 transition-colors hover:text-ink"
+                    >
+                      Google Scholar ↗
+                    </a>
+                  )}
                 </div>
-                <div className="space-y-3">
-                  <p className="label-mono">links</p>
-                  <div className="flex flex-col gap-2">
-                    {pub.pdf && (
-                      <a
-                        href={pub.pdf}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="rounded-lg border border-line-bright px-4 py-2.5 text-sm text-ink transition-colors hover:border-accent hover:text-accent"
+              </>
+            ) : (
+              <>
+                {pub.keywords.length > 0 && (
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {pub.keywords.map((kw) => (
+                      <span
+                        key={kw}
+                        className="rounded-full border border-line px-3 py-1 font-mono text-[11px] text-faint"
                       >
-                        Read the PDF ↗
-                      </a>
-                    )}
-                    {pub.links.code && (
-                      <a
-                        href={pub.links.code}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="rounded-lg border border-line-bright px-4 py-2.5 text-sm text-ink transition-colors hover:border-accent hover:text-accent"
-                      >
-                        Code ↗
-                      </a>
-                    )}
-                    {pub.links.scholar && (
-                      <a
-                        href={pub.links.scholar}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="rounded-lg border border-line-bright px-4 py-2.5 text-sm text-ink transition-colors hover:border-accent hover:text-accent"
-                      >
-                        Google Scholar ↗
-                      </a>
-                    )}
+                        {kw}
+                      </span>
+                    ))}
                   </div>
-                </div>
-              </div>
-            </Reveal>
+                )}
 
-            {/* Figures */}
-            {pub.figures.length > 0 && (
-              <section className="mt-14" aria-label="Figures">
-                <p className="label-mono mb-6">figures</p>
-                <div className="space-y-5">
-                  {pub.figures.map((fig, i) => (
-                    <LabPlate
-                      key={fig.src}
-                      figure={{ src: fig.src, caption: `fig. ${i + 1} / ${fig.caption}`, plate: true }}
-                    />
-                  ))}
+                {/* Abstract */}
+                <Reveal className="mt-10">
+                  <div className="grid gap-8 lg:grid-cols-[1fr_20rem]">
+                    <div>
+                      <p className="label-mono mb-3">abstract</p>
+                      <p className="max-w-2xl text-[15px] leading-relaxed text-dim">
+                        {pub.abstract}
+                      </p>
+                    </div>
+                    <div className="space-y-3">
+                      <p className="label-mono">links</p>
+                      <div className="flex flex-col gap-2">
+                        {pub.pdf && (
+                          <a
+                            href={pub.pdf}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="rounded-lg border border-line-bright px-4 py-2.5 text-sm text-ink transition-colors hover:border-accent hover:text-accent"
+                          >
+                            Read the PDF ↗
+                          </a>
+                        )}
+                        {pub.links.code && (
+                          <a
+                            href={pub.links.code}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="rounded-lg border border-line-bright px-4 py-2.5 text-sm text-ink transition-colors hover:border-accent hover:text-accent"
+                          >
+                            Code ↗
+                          </a>
+                        )}
+                        {pub.links.scholar && (
+                          <a
+                            href={pub.links.scholar}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="rounded-lg border border-line-bright px-4 py-2.5 text-sm text-ink transition-colors hover:border-accent hover:text-accent"
+                          >
+                            Google Scholar ↗
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </Reveal>
+
+                {/* Figures */}
+                {pub.figures.length > 0 && (
+                  <section className="mt-14" aria-label="Figures">
+                    <p className="label-mono mb-6">figures</p>
+                    <div className="space-y-5">
+                      {pub.figures.map((fig, i) => (
+                        <LabPlate
+                          key={fig.src}
+                          figure={{ src: fig.src, caption: `fig. ${i + 1} / ${fig.caption}`, plate: true }}
+                        />
+                      ))}
+                    </div>
+                  </section>
+                )}
+
+                {/* Body */}
+                <div className="prose-lab mt-14 max-w-3xl">
+                  <MDXContent code={pub.content} />
                 </div>
-              </section>
+
+                {/* Citation */}
+                <section className="mt-14 max-w-3xl" aria-label="Citation">
+                  <p className="label-mono mb-4">cite this work</p>
+                  <BibtexBlock bibtex={pub.bibtex} slug={pub.slug} />
+                </section>
+              </>
             )}
-
-            {/* Body */}
-            <div className="prose-lab mt-14 max-w-3xl">
-              <MDXContent code={pub.content} />
-            </div>
-
-            {/* Citation */}
-            <section className="mt-14 max-w-3xl" aria-label="Citation">
-              <p className="label-mono mb-4">cite this work</p>
-              <BibtexBlock bibtex={pub.bibtex} slug={pub.slug} />
-            </section>
           </div>
         </article>
       ))}

@@ -13,9 +13,9 @@ export const domains: Domain[] = [
     id: "research",
     label: "Research",
     headline: "Privacy under generative editing.",
-    body: "My research centers on biometric privacy: keeping people un-relinkable to face-recognition systems after their photos are edited by generative models. Obscrowd protects every face in a group image jointly, through a teacher-student-refinement pipeline, and reports its own limits honestly.",
+    body: "My research centers on biometric privacy: keeping people un-relinkable to face-recognition systems after their photos are edited by generative models. My working paper protects every face in a group image jointly, through a teacher-student-refinement pipeline, and reports its own limits honestly.",
     evidence: [
-      { label: "Obscrowd publication", href: "/research" },
+      { label: "Working paper", href: "/research" },
       { label: "Google Scholar", href: "https://scholar.google.com/citations?user=CIjeZSsAAAAJ&hl=en" },
     ],
     tools: ["Diffusion models", "Adversarial ML", "Face recognition", "PyTorch"],
@@ -46,9 +46,9 @@ export const domains: Domain[] = [
     id: "image-processing",
     label: "Image Processing",
     headline: "Pixels as first-class data.",
-    body: "From soft-mask-guided perturbations in Obscrowd to segmentation-overlay pipelines and hand-rolled OpenGL rasterization, I work close to the pixel. I care about the boundary between what a model sees and what a human sees.",
+    body: "From soft-mask-guided perturbations to segmentation-overlay pipelines and hand-rolled OpenGL rasterization, I work close to the pixel. I care about the boundary between what a model sees and what a human sees.",
     evidence: [
-      { label: "Obscrowd figures", href: "/research" },
+      { label: "Research figures", href: "/research" },
       { label: "OpenGL games", href: "/projects/opengl-games" },
     ],
     tools: ["Soft masks", "Grad-CAM", "Midpoint algorithm", "PIL"],

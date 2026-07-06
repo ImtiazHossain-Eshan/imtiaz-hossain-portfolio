@@ -58,7 +58,7 @@ export const resume = {
       org: "Independent Research · BRAC University",
       period: "2026",
       bullets: [
-        "Designed Obscrowd, a privacy framework for multi-portrait biometric unlinkability under generative editing, protecting every detected face in a group image with a single imperceptible, mask-guided perturbation.",
+        "Designed a privacy framework for multi-portrait biometric unlinkability under generative editing, protecting every detected face in a group image with a single imperceptible, mask-guided perturbation.",
         "Engineered a teacher-student-refinement pipeline: a diffusion-guided teacher, a lightweight student generator for efficient deployment, and an inference-time refinement stage within a bounded perceptual budget.",
         "Reduced face-recognition similarity from 0.957 to 0.138 after generative edits while keeping the protected image visually faithful, training against a face-recognition ensemble and differentiable editing attacks.",
       ],
@@ -104,7 +104,7 @@ export const resume = {
 
   research: [
     {
-      title: "Obscrowd: Multi-Portrait Biometric Unlinkability under Generative Editing",
+      title: "Multi-Portrait Biometric Unlinkability under Generative Editing",
       venue: "Working paper",
       year: "2026",
       note: "Joint multi-face privacy protection via a teacher-student-refinement pipeline.",
@@ -130,7 +130,7 @@ export const resumeScorecard = {
     { label: "Overall hiring competitiveness", score: 88 },
   ],
   recommendations: [
-    "Convert the Obscrowd working paper into a public preprint (arXiv) and add a DOI, the single highest-leverage gap for research roles.",
+    "Convert the working paper into a public preprint (arXiv) and add a DOI, the single highest-leverage gap for research roles.",
     "Open-source the trained model weights or a hosted inference Space for the AI projects to make the metrics independently reproducible.",
     "Add a formal internship or research-assistant role when available; the project evidence is strong, but named affiliations strengthen recruiter signal.",
     "Publish a subset of the seeded blog posts to demonstrate written communication depth.",

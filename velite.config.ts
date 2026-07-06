@@ -88,6 +88,11 @@ const publications = defineCollection({
         .default({}),
       figures: gallery.default([]),
       keywords: s.array(s.string()).default([]),
+      /** When true, the research page shows only a teaser + figures — the
+          abstract, body, keywords, and citation are withheld (paper in prep). */
+      restricted: s.boolean().default(false),
+      /** Short public description shown in place of the abstract when restricted. */
+      teaser: s.string().optional(),
       raw: s.raw(),
       content: s.mdx(),
     })

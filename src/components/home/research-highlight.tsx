@@ -8,6 +8,14 @@ export function ResearchHighlight() {
   const pub = publications[0];
   if (!pub) return null;
 
+  // Restricted (in-preparation) papers show only the teaser + a neutral caption
+  // here too, so the homepage never re-exposes what /research withholds.
+  const summarySource = pub.restricted && pub.teaser ? pub.teaser : pub.abstract;
+  const summary =
+    summarySource.length > 340 ? summarySource.slice(0, 340).trimEnd() + "…" : summarySource;
+  const cover = pub.figures[0];
+  const coverCaption = pub.restricted ? "fig. 01" : cover?.caption ?? "figure";
+
   return (
     <section className="wrap py-28 md:py-36" aria-labelledby="research-heading">
       <Reveal>
@@ -21,9 +29,7 @@ export function ResearchHighlight() {
           >
             {pub.title}
           </h2>
-          <p className="mt-6 max-w-xl text-[15px] leading-relaxed text-dim">
-            {pub.abstract.length > 340 ? pub.abstract.slice(0, 340).trimEnd() + "…" : pub.abstract}
-          </p>
+          <p className="mt-6 max-w-xl text-[15px] leading-relaxed text-dim">{summary}</p>
           <div className="mt-6 flex flex-wrap items-center gap-3">
             <span className="rounded-full border border-accent/30 px-3 py-1 font-mono text-[11px] uppercase tracking-widest text-accent">
               {pub.status.replace("-", " ")}
@@ -40,20 +46,18 @@ export function ResearchHighlight() {
             Read the publication &rarr;
           </Link>
         </Reveal>
-        {pub.figures[0] && (
+        {cover && (
           <Reveal delay={0.15} className="md:col-span-5">
             <figure className="overflow-hidden rounded-xl border border-line bg-surface">
               <Image
-                src={pub.figures[0].src}
-                alt={pub.figures[0].caption}
+                src={cover.src}
+                alt={coverCaption}
                 width={1100}
                 height={800}
                 sizes="(max-width: 768px) 100vw, 40vw"
                 className="h-auto w-full"
               />
-              <figcaption className="label-mono px-4 py-3">
-                {pub.figures[0].caption}
-              </figcaption>
+              <figcaption className="label-mono px-4 py-3">{coverCaption}</figcaption>
             </figure>
           </Reveal>
         )}

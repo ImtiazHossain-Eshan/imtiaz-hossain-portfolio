@@ -17,8 +17,8 @@ RAG and LLM structured output. Web and backend: Next.js, React, Node.js, Express
 Hono, MongoDB, MySQL, Drizzle. Cloud and tooling: Cloudflare Workers, D1, R2,
 Vercel, Docker, Git, Linux, PWA.
 
-Experience highlights. As an AI researcher he designed Obscrowd, a biometric
-privacy framework. As a machine learning engineer he built a brain-tumor
+Experience highlights. As an AI researcher he designed a biometric privacy
+framework for multi-portrait unlinkability under generative editing. As a machine learning engineer he built a brain-tumor
 segmentation and classification pipeline reaching 88.22% test Dice and 97.50%
 classification accuracy. As an NLP engineer he built a 27-experiment news
 classification benchmark (0.9376 macro-F1 with BERT) and a 28-feature AI-text
