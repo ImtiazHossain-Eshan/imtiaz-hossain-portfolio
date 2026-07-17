@@ -368,14 +368,13 @@ def build_pdf() -> None:
         story.append(Paragraph(esc(item["summary"]), styles["small"]))
 
     section(story, "Honors & Certifications", styles)
-    honors = " | ".join(
-        f'{item["title"]} ({item["awarder"]})' for item in data["awards"]
-    )
-    certificates = " | ".join(
-        f'{item["name"]} - {item["issuer"]}' for item in data["certificates"]
-    )
-    story.append(Paragraph(esc(honors), styles["small"]))
-    story.append(Paragraph(esc(certificates), styles["small"]))
+    for item in data["awards"]:
+        story.append(
+            Paragraph(esc(f'- {item["title"]} ({item["awarder"]})'), styles["small"])
+        )
+    story.append(Paragraph("<i>Certifications</i>", styles["small"]))
+    for item in data["certificates"]:
+        story.append(Paragraph(esc(f'- {item["name"]} - {item["issuer"]}'), styles["small"]))
 
     doc = BaseDocTemplate(
         str(OUTPUT_PDF),

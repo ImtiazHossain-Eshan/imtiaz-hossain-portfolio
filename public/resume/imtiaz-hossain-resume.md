@@ -110,7 +110,7 @@ Computer Science and Engineering student at BRAC University working across machi
 
 ## Research Output
 
-**Multi-Portrait Biometric Unlinkability under Generative Editing.** Working paper, 2026. Single-author manuscript in preparation; full methods and quantitative results remain restricted.
+**Multi-Portrait Biometric Unlinkability under Generative Editing.** Working paper, 2026. Manuscript in preparation with a four-member research team; full methods and quantitative results remain restricted.
 
 ## Education
 
@@ -129,7 +129,9 @@ Supported club operations and esports event management at BRAC University.
 
 ## Honors & Certifications
 
-- Four-time scholarship recipient based on merit and prior academic results
+- Five-time scholarship recipient based on merit and prior academic results
+- Top 10 finalist, TECHATHON NATIONALS 2026, presented by IUT Robotics Society
+- Finalist, The Infinity AI BuildFest 2026 hackathon
 - Final-round participant, Bit Battles Programming Contest
 - Solved 233+ algorithmic problems on LeetCode
 - IELTS overall band 7
