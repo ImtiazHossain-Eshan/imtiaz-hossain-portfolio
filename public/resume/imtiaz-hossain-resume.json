@@ -2,59 +2,187 @@
   "$schema": "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json",
   "basics": {
     "name": "Imtiaz Hossain",
-    "label": "AI Engineer, Machine Learning, Computer Vision, NLP, Research",
+    "label": "AI/ML Research | Computer Vision & NLP | Full-Stack, Mobile & Systems Engineering",
     "email": "imtiaz.hossain.eshan@gmail.com",
-    "summary": "AI Engineer and researcher specializing in computer vision, NLP, and deep learning, with a track record of production-grade full-stack systems and rigorous, reproducible ML studies. Trains and evaluates models end to end (88.22% test Dice for brain-tumor segmentation, 97.40% accuracy for AI-text detection, 0.9376 macro-F1 across a 27-run NLP benchmark) and ships systems on zero-cost cloud infrastructure. Research advances biometric privacy under generative editing.",
-    "location": { "city": "Dhaka", "countryCode": "BD", "region": "Bangladesh" },
+    "phone": "+880 1401-692968",
+    "url": "https://www.imtiazhossain.dev",
+    "summary": "Computer Science and Engineering student at BRAC University working across machine learning, computer vision, natural language processing, mobile development, and full-stack systems. Builds projects from experimental design and model evaluation through APIs, cloud deployment, and interactive interfaces. Research focuses on biometric privacy under generative image editing, with work in medical imaging and text analysis. Interested in research and engineering roles that value reproducible evidence, systems thinking, and dependable software.",
+    "location": {
+      "city": "Dhaka",
+      "region": "Bangladesh",
+      "countryCode": "BD"
+    },
     "profiles": [
-      { "network": "GitHub", "username": "ImtiazHossain-Eshan", "url": "https://github.com/ImtiazHossain-Eshan" },
-      { "network": "LinkedIn", "username": "imtiazhossaineshan", "url": "https://www.linkedin.com/in/imtiazhossaineshan/" },
-      { "network": "Google Scholar", "username": "Imtiaz Hossain", "url": "https://scholar.google.com/citations?user=CIjeZSsAAAAJ&hl=en" },
-      { "network": "LeetCode", "username": "Imtiaz_Hossain_Eshan", "url": "https://leetcode.com/u/Imtiaz_Hossain_Eshan/" }
+      {
+        "network": "GitHub",
+        "username": "ImtiazHossain-Eshan",
+        "url": "https://github.com/ImtiazHossain-Eshan"
+      },
+      {
+        "network": "LinkedIn",
+        "username": "imtiazhossaineshan",
+        "url": "https://www.linkedin.com/in/imtiazhossaineshan/"
+      },
+      {
+        "network": "Google Scholar",
+        "username": "Imtiaz Hossain",
+        "url": "https://scholar.google.com/citations?user=CIjeZSsAAAAJ&hl=en"
+      },
+      {
+        "network": "LeetCode",
+        "username": "Imtiaz_Hossain_Eshan",
+        "url": "https://leetcode.com/u/Imtiaz_Hossain_Eshan/"
+      }
     ]
   },
+  "skills": [
+    {
+      "name": "Programming Languages",
+      "keywords": [
+        "Python, TypeScript, Kotlin, C, JavaScript, SQL, PHP",
+        "Object-oriented programming, data structures, algorithms, and problem solving"
+      ]
+    },
+    {
+      "name": "Machine Learning & Data Science",
+      "keywords": [
+        "PyTorch, scikit-learn, Hugging Face Transformers, OpenCV, NumPy, pandas, gensim",
+        "Regression, classification, hyperparameter search, cross-validation, and feature engineering",
+        "Experimental design, class-imbalance handling, error analysis, evaluation, and reproducibility"
+      ]
+    },
+    {
+      "name": "Computer Vision & NLP",
+      "keywords": [
+        "U-Net, Attention U-Net, DenseNet, EfficientNet, MobileNet, and diffusion models",
+        "BERT, RNN/GRU/LSTM, TF-IDF, embeddings, stylometry, mRMR, and RFE"
+      ]
+    },
+    {
+      "name": "Web, Cloud & Data",
+      "keywords": [
+        "Next.js, React, Node.js, Express, Hono, Socket.IO, REST APIs, and Zod",
+        "Cloudflare Workers, D1, R2, Vercel, and Docker",
+        "MongoDB, MySQL, Drizzle ORM, Clerk, JWT, and role-based access control"
+      ]
+    },
+    {
+      "name": "Mobile, Systems & Tools",
+      "keywords": [
+        "Android SDK, Jetpack Navigation, Activities, Fragments, ViewBinding, XML, and ConstraintLayout",
+        "Intents, BroadcastReceiver, MediaPlayer, VideoView, Glide, and custom touch gestures",
+        "POSIX, Linux, Git, Gradle, JUnit, Vitest, LaTeX, and technical writing"
+      ]
+    }
+  ],
   "work": [
     {
-      "name": "Independent Research, BRAC University",
-      "position": "AI Researcher (Biometric Privacy)",
+      "section": "Research Experience",
+      "name": "Obscrowd, BRAC University",
+      "position": "Independent Researcher - Biometric Privacy",
       "startDate": "2026",
+      "endDate": "Present",
       "highlights": [
-        "Designed Obscrowd, a privacy framework for multi-portrait biometric unlinkability under generative editing, protecting every detected face in a group image with a single imperceptible, mask-guided perturbation.",
-        "Engineered a teacher-student-refinement pipeline: a diffusion-guided teacher, a lightweight student generator, and an inference-time refinement stage within a bounded perceptual budget.",
-        "Reduced face-recognition similarity from 0.957 to 0.138 after generative edits while keeping the image visually faithful."
+        "Designed Obscrowd, a multi-portrait biometric privacy framework that protects every detected face with one soft-mask-guided perturbation while preserving the visual fidelity of the original image.",
+        "Built a teacher-student-refinement pipeline combining a diffusion-guided teacher, lightweight student generator, face-recognition ensembles, and differentiable editing attacks for identity disruption.",
+        "Evaluated protection per face across generative edits and processing conditions; a sample smile edit reduced recognition similarity from 0.957 to 0.138, while compression remains an open limitation."
       ]
     },
     {
-      "name": "Brain Tumor Segmentation & Classification",
-      "position": "Machine Learning Engineer (Medical Imaging)",
+      "section": "Research Experience",
+      "name": "Brain Tumor Segmentation and Classification",
+      "position": "Machine Learning Engineer - Medical Imaging",
       "startDate": "2026",
       "highlights": [
-        "Implemented and compared U-Net, Attention U-Net, and three CNN classifiers on the BRISC 2025 MRI dataset in PyTorch.",
-        "Achieved 88.22% test Dice, 79.74% mIoU, 99.61% pixel accuracy, and 97.50% four-class classification accuracy on 860 unseen samples.",
-        "Ran a 20-config hyperparameter study and showed separate training beats joint multi-task learning by ~5 points."
+        "Implemented U-Net and Attention U-Net segmentation plus DenseNet-121, EfficientNet-B0, and MobileNetV2 classification pipelines for four-class MRI analysis on the BRISC 2025 dataset in PyTorch.",
+        "Achieved 88.22% test Dice, 79.74% mIoU, and 99.61% pixel accuracy with U-Net, while DenseNet-121 reached 97.50% classification accuracy on held-out BRISC MRI samples from the four-category test set.",
+        "Ran 20 optimizer and learning-rate configurations and compared shared-encoder multi-task training with separate models, finding task-specific training improved both tasks and avoided task interference."
       ]
     },
     {
-      "name": "News Classification & AI-Text Detection",
-      "position": "NLP Engineer",
+      "section": "Research Experience",
+      "name": "News Classification and AI-Generated Text Detection",
+      "position": "NLP and Machine Learning Engineer",
       "startDate": "2025",
       "endDate": "2026",
       "highlights": [
-        "Built a 27-experiment benchmark (9 architectures x 3 preprocessing pipelines) on 102k headlines: 0.9376 macro-F1 (BERT-Base), 0.9214 (Bi-GRU in 19s).",
-        "Engineered 28 stylometric features with mRMR/RFE selection, reaching 97.40% accuracy on HC3 with Random Forest and quantifying a cross-generator generalization gap.",
-        "Found that BERT's WordPiece tokenizer inverts the preprocessing rules that hold for classical models."
+        "Built a reproducible 27-run benchmark of nine architectures and three preprocessing pipelines across 102,002 training headlines, spanning TF-IDF, recurrent networks, and BERT-Base under matched controls.",
+        "Reached 0.9376 macro-F1 with BERT-Base and 0.9214 with Bi-GRU trained in 18.7 seconds, showing that aggressive preprocessing helps shallow models but degrades pretrained transformers for this corpus.",
+        "Engineered 28 lexical, syntactic, readability, and distributional features for AI-text detection; Random Forest reached 97.40% in-domain accuracy but exposed severe cross-generator failure."
       ]
     },
     {
-      "name": "BRACU Vault, Polaris, E-GamerHub",
-      "position": "Full-Stack Engineer",
-      "startDate": "2025",
-      "endDate": "2026",
+      "section": "Selected Engineering Projects",
+      "name": "BRACU Vault and Polaris",
+      "position": "Full-Stack and AI Engineering",
+      "startDate": "2026",
       "highlights": [
-        "Built BRACU Vault on Cloudflare's free tier (Workers + Hono, D1, R2, Clerk) with data-driven six-role RBAC and email-gated uploads.",
-        "Engineered Polaris, an AI academic strategist using Gemini structured-JSON output, RAG, and a transparent probability model with no-API-key fallback.",
-        "Developed E-GamerHub, a MERN platform with Socket.IO messaging, RBAC moderation, and Groq Llama 3 natural-language search."
+        "Built BRACU Vault, a verified academic resource platform on Next.js, Cloudflare Workers, Hono, D1, R2, Drizzle, and Clerk, with university-email-gated uploads, moderation, and audit trails.",
+        "Designed a six-role, data-driven access model and controller-service-repository-policy API; atomic D1 activation and audit logging keep verification idempotent and traceable across privileged workflows.",
+        "Built Polaris using Gemini structured JSON, retrieval over a 60-document knowledge base, and a transparent logistic-regression model for explainable academic planning and what-if simulation.",
+        "Implemented offline heuristic fallbacks, Zod validation, subscription gating, MongoDB indexes, signed payment webhooks, and role-aware student, parent, partner, and admin views across paid tiers."
       ]
+    },
+    {
+      "section": "Selected Engineering Projects",
+      "name": "Vantage Arm Digital Twin and WattsUp Office Monitor",
+      "position": "Robotics and Real-Time Systems",
+      "startDate": "2026",
+      "highlights": [
+        "Engineered a Three.js robotic-arm digital twin with damped-least-squares inverse kinematics, forward-kinematics verification, collision checks, joint limits, motion replay, and autonomous PIN entry.",
+        "Centralized manual, voice, Gemini-planned, replay, and PIN commands behind one deterministic safety gateway, with a Zustand state model and an ESP32 six-servo hardware concept for all control modes.",
+        "Built WattsUp as a simulated IoT energy monitor whose Express backend owns 15-device state, virtual time, usage, and alert rules shared by a live Three.js dashboard and Discord bot without client drift.",
+        "Synchronized controls over Socket.IO and exposed status, usage, simulation, turn-off, and alert commands through Discord.js, with stable IDs for deduplicated notifications across both interfaces."
+      ]
+    },
+    {
+      "section": "Selected Engineering Projects",
+      "name": "CSE489 Mobile Application Development",
+      "position": "Android Application Development",
+      "startDate": "2026",
+      "highlights": [
+        "Built two Kotlin Android applications covering Activities, Fragments, lifecycle state restoration, ViewBinding, Jetpack Navigation, responsive XML resources, and JUnit-tested business logic.",
+        "Implemented custom broadcasts, battery status handling, Glide image loading, matrix-based pinch zoom and panning, plus audio and video playback with lifecycle-aware resource cleanup for lifecycle safety."
+      ]
+    },
+    {
+      "section": "Selected Engineering Projects",
+      "name": "Custom UNIX Shell and VSFSck",
+      "position": "Systems Programming",
+      "startDate": "2025",
+      "highlights": [
+        "Built C systems tools: a POSIX shell with fork/exec, pipes, redirection, chaining, history, and scoped SIGINT handling, plus an fsck-style checker for superblocks, bitmaps, inodes, and block references."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "E-GamerHub",
+      "description": "Co-developed a MERN social platform with Socket.IO messaging, RBAC moderation, per-game statistics, and Llama 3 intent extraction for natural-language player search."
+    },
+    {
+      "name": "CampusSync",
+      "description": "Built a PHP and MySQL PWA with automated course ingestion, routine-based free-time matching, read-state notifications, and offline fallback support."
+    },
+    {
+      "name": "UniBoard",
+      "description": "Built a PHP and MySQL campus noticeboard with verified club dashboards, event discovery filters, RSVP and calendar workflows, and engagement analytics."
+    },
+    {
+      "name": "Cholo",
+      "description": "Designed the normalized MySQL schema and PHP backend for a university ride-sharing system with verified accounts, recurring trips, ratings, and trip management."
+    },
+    {
+      "name": "OpenGL Games Trilogy",
+      "description": "Implemented three PyOpenGL and GLUT games using primitive rendering, midpoint line rasterization, AABB collision, and hand-written game loops."
+    },
+    {
+      "name": "Software Quality Prediction",
+      "description": "Compared four classifiers and k-means/PCA on 1,600 code-metric samples, reporting the weak 0.4418 best weighted-F1 signal as the study's central finding."
+    },
+    {
+      "name": "The Proposer's Dilemma",
+      "description": "Built a multi-round Python bargaining simulation that makes Nash equilibrium, backward induction, acceptance behavior, and changing incentives visible through score trajectories."
     }
   ],
   "education": [
@@ -62,27 +190,81 @@
       "institution": "BRAC University",
       "area": "Computer Science and Engineering",
       "studyType": "B.Sc.",
+      "startDate": "2023",
+      "endDate": "Present",
       "score": "CGPA 3.7+",
-      "courses": ["Machine Learning", "Artificial Intelligence", "Computer Graphics", "Operating Systems", "Database Systems", "Data Structures & Algorithms"]
+      "courses": [
+        "Machine Learning",
+        "Artificial Intelligence",
+        "Mobile Application Development",
+        "Computer Graphics",
+        "Operating Systems",
+        "Database Systems",
+        "Data Structures and Algorithms"
+      ]
     }
   ],
   "publications": [
     {
-      "name": "Obscrowd: Multi-Portrait Biometric Unlinkability under Generative Editing",
+      "name": "Multi-Portrait Biometric Unlinkability under Generative Editing",
+      "publisher": "Working paper",
       "releaseDate": "2026",
-      "summary": "Joint multi-face privacy protection via a teacher-student-refinement pipeline. Working paper."
+      "summary": "Single-author manuscript in preparation; full methods and quantitative results remain restricted."
+    }
+  ],
+  "volunteer": [
+    {
+      "organization": "Dhaka, Bangladesh",
+      "position": "Private Tutor",
+      "startDate": "2024",
+      "endDate": "Present",
+      "summary": "Tutors programming in C, Java, and Python alongside data structures, algorithms, and mathematics; supports students with problem solving and university coursework."
+    },
+    {
+      "organization": "BRACU E-Sports Club",
+      "position": "Assistant Director",
+      "summary": "Supported club operations and esports event management at BRAC University."
+    }
+  ],
+  "awards": [
+    {
+      "title": "Four-time scholarship recipient",
+      "awarder": "Merit and prior academic results"
+    },
+    {
+      "title": "Final-round participant",
+      "awarder": "Bit Battles Programming Contest"
+    },
+    {
+      "title": "Solved 233+ algorithmic problems",
+      "awarder": "LeetCode"
+    },
+    {
+      "title": "IELTS overall band 7",
+      "awarder": "English proficiency"
     }
   ],
   "certificates": [
-    { "name": "Understanding Machine Learning", "issuer": "DataCamp" },
-    { "name": "Data Manipulation in Python", "issuer": "DataCamp" },
-    { "name": "Cleaning Data in Python", "issuer": "DataCamp" }
+    {
+      "name": "Understanding Machine Learning",
+      "issuer": "DataCamp"
+    },
+    {
+      "name": "Data Manipulation in Python",
+      "issuer": "DataCamp"
+    },
+    {
+      "name": "Cleaning Data in Python",
+      "issuer": "DataCamp"
+    }
   ],
-  "skills": [
-    { "name": "Languages", "keywords": ["Python", "TypeScript", "C", "JavaScript", "SQL", "PHP"] },
-    { "name": "AI / ML", "keywords": ["PyTorch", "scikit-learn", "HuggingFace Transformers", "OpenCV", "gensim", "NumPy", "pandas"] },
-    { "name": "Models & methods", "keywords": ["U-Net", "DenseNet", "BERT", "GRU/LSTM", "Random Forest", "diffusion & adversarial ML", "RAG"] },
-    { "name": "Web & backend", "keywords": ["Next.js", "React", "Node.js", "Express", "Hono", "MongoDB", "MySQL", "Drizzle"] },
-    { "name": "Cloud & tooling", "keywords": ["Cloudflare Workers/D1/R2", "Vercel", "Docker", "Git", "Linux", "PWA"] }
-  ]
+  "meta": {
+    "format": "Two-page professional research and engineering resume",
+    "provenance": [
+      "Obscrowd is a working paper in preparation and is not presented as published or peer reviewed.",
+      "Research metrics are project evaluation results, not employer or production claims.",
+      "Android skills are supported by the two inspected CSE489 assignment codebases.",
+      "Leadership is listed without an invented date because the available source does not provide one."
+    ]
+  }
 }

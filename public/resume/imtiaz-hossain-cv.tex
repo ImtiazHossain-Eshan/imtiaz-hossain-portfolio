@@ -1,82 +1,141 @@
-\documentclass[11pt,a4paper]{article}
-\usepackage[margin=1.6cm]{geometry}
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=1.25cm]{geometry}
 \usepackage{enumitem}
 \usepackage[hidelinks]{hyperref}
 \usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
 \usepackage{xcolor}
 
-\definecolor{accent}{HTML}{0B5A7A}
-\titleformat{\section}{\large\bfseries\color{accent}}{}{0em}{}[\vspace{-0.6em}\rule{\linewidth}{0.4pt}]
-\titlespacing{\section}{0pt}{1.1em}{0.5em}
-\setlist[itemize]{leftmargin=1.1em,itemsep=0.15em,topsep=0.2em}
-\pagestyle{empty}
-\newcommand{\entry}[3]{\textbf{#1} \hfill \textit{#3}\\[-0.2em]{\color{accent}#2}\\[0.2em]}
+\titleformat{\section}{\large\bfseries}{}{0em}{}[\vspace{-0.35em}\rule{\linewidth}{0.4pt}]
+\titlespacing{\section}{0pt}{0.55em}{0.25em}
+\setlist[itemize]{leftmargin=1.35em,itemsep=0.08em,topsep=0.12em,parsep=0pt,partopsep=0pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[R]{\small\thepage/\pageref*{LastPage}}
+
+\newcommand{\entry}[3]{%
+  \textbf{#1}\hfill {\color{gray}#3}\\[-0.08em]
+  \textit{#2}\vspace{0.05em}
+}
+\newcommand{\skillgroup}[1]{\textbf{#1}\par}
+\newcommand{\skillline}[1]{\hspace{0.6em}- #1\par}
+\newcommand{\projectline}[2]{\textbf{#1:} #2\par}
 
 \begin{document}
+\fontsize{9.2}{10.5}\selectfont
 
-\begin{center}
-  {\huge\bfseries Imtiaz Hossain}\\[0.3em]
-  {\color{accent} AI Engineer $\cdot$ Machine Learning $\cdot$ Computer Vision $\cdot$ NLP $\cdot$ Research}\\[0.4em]
-  Dhaka, Bangladesh $\cdot$ \href{mailto:imtiaz.hossain.eshan@gmail.com}{imtiaz.hossain.eshan@gmail.com}\\
-  \href{https://github.com/ImtiazHossain-Eshan}{github.com/ImtiazHossain-Eshan} $\cdot$
-  \href{https://www.linkedin.com/in/imtiazhossaineshan/}{linkedin.com/in/imtiazhossaineshan} $\cdot$
-  \href{https://scholar.google.com/citations?user=CIjeZSsAAAAJ}{Google Scholar}
-\end{center}
+{\LARGE\bfseries Imtiaz Hossain}\par
+\href{mailto:imtiaz.hossain.eshan@gmail.com}{imtiaz.hossain.eshan@gmail.com}
+\enspace|\enspace +880 1401-692968
+\enspace|\enspace Dhaka, Bangladesh\par
+\href{https://www.imtiazhossain.dev}{imtiazhossain.dev}
+\enspace|\enspace \href{https://github.com/ImtiazHossain-Eshan}{GitHub}
+\enspace|\enspace \href{https://www.linkedin.com/in/imtiazhossaineshan/}{LinkedIn}
+\enspace|\enspace \href{https://scholar.google.com/citations?user=CIjeZSsAAAAJ}{Google Scholar}\par
+\textbf{AI/ML Research | Computer Vision \& NLP | Full-Stack, Mobile \& Systems Engineering}
 
 \section{Summary}
-AI Engineer and researcher specializing in computer vision, NLP, and deep learning, with a track record of production-grade full-stack systems and rigorous, reproducible ML studies. I train and evaluate models end to end (88.22\% test Dice for brain-tumor segmentation, 97.40\% accuracy for AI-text detection, 0.9376 macro-F1 across a 27-run NLP benchmark) and ship systems that run on zero-cost cloud infrastructure. My research advances biometric privacy under generative editing.
+Computer Science and Engineering student at BRAC University working across machine learning, computer vision, natural language processing, mobile development, and full-stack systems. Builds projects from experimental design and model evaluation through APIs, cloud deployment, and interactive interfaces. Research focuses on biometric privacy under generative image editing, with work in medical imaging and text analysis. Interested in research and engineering roles that value reproducible evidence, systems thinking, and dependable software.
 
 \section{Technical Skills}
+\skillgroup{Programming Languages}
+\skillline{Python, TypeScript, Kotlin, C, JavaScript, SQL, PHP}
+\skillline{Object-oriented programming, data structures, algorithms, and problem solving}
+\skillgroup{Machine Learning \& Data Science}
+\skillline{PyTorch, scikit-learn, Hugging Face Transformers, OpenCV, NumPy, pandas, gensim}
+\skillline{Regression, classification, hyperparameter search, cross-validation, and feature engineering}
+\skillline{Experimental design, class-imbalance handling, error analysis, evaluation, and reproducibility}
+\skillgroup{Computer Vision \& NLP}
+\skillline{U-Net, Attention U-Net, DenseNet, EfficientNet, MobileNet, and diffusion models}
+\skillline{BERT, RNN/GRU/LSTM, TF-IDF, embeddings, stylometry, mRMR, and RFE}
+\skillgroup{Web, Cloud \& Data}
+\skillline{Next.js, React, Node.js, Express, Hono, Socket.IO, REST APIs, and Zod}
+\skillline{Cloudflare Workers, D1, R2, Vercel, and Docker}
+\skillline{MongoDB, MySQL, Drizzle ORM, Clerk, JWT, and role-based access control}
+\skillgroup{Mobile, Systems \& Tools}
+\skillline{Android SDK, Jetpack Navigation, Activities, Fragments, ViewBinding, XML, and ConstraintLayout}
+\skillline{Intents, BroadcastReceiver, MediaPlayer, VideoView, Glide, and custom touch gestures}
+\skillline{POSIX, Linux, Git, Gradle, JUnit, Vitest, LaTeX, and technical writing}
+
+\section{Research Experience}
+\entry{Independent Researcher - Biometric Privacy}{Obscrowd, BRAC University}{2026 - Present}
 \begin{itemize}
-  \item \textbf{Languages:} Python, TypeScript, C, JavaScript, SQL, PHP
-  \item \textbf{AI / ML:} PyTorch, scikit-learn, HuggingFace Transformers, OpenCV, gensim, NumPy, pandas
-  \item \textbf{Models \& methods:} U-Net / Attention U-Net, DenseNet / EfficientNet / MobileNet, BERT / RNN / GRU / LSTM, Random Forest / SVM / k-means, diffusion \& adversarial ML, RAG
-  \item \textbf{Web \& backend:} Next.js, React, Node.js, Express, Hono, MongoDB, MySQL, Drizzle
-  \item \textbf{Cloud \& tooling:} Cloudflare Workers / D1 / R2, Vercel, Docker, Git, Linux, PWA
+  \item Designed Obscrowd, a multi-portrait biometric privacy framework that protects every detected face with one soft-mask-guided perturbation while preserving the visual fidelity of the original image.
+  \item Built a teacher-student-refinement pipeline combining a diffusion-guided teacher, lightweight student generator, face-recognition ensembles, and differentiable editing attacks for identity disruption.
+  \item Evaluated protection per face across generative edits and processing conditions; a sample smile edit reduced recognition similarity from 0.957 to 0.138, while compression remains an open limitation.
 \end{itemize}
 
-\section{Engineering \& Research Experience}
-\entry{AI Researcher (Biometric Privacy)}{Independent Research, BRAC University}{2026}
+\entry{Machine Learning Engineer - Medical Imaging}{Brain Tumor Segmentation and Classification}{2026}
 \begin{itemize}
-  \item Designed Obscrowd, a privacy framework for multi-portrait biometric unlinkability under generative editing, protecting every detected face in a group image with a single imperceptible, mask-guided perturbation.
-  \item Engineered a teacher-student-refinement pipeline (diffusion-guided teacher, lightweight student generator, inference-time refinement) trained against a face-recognition ensemble and differentiable editing attacks.
-  \item Reduced face-recognition similarity from 0.957 to 0.138 after generative edits while keeping the protected image visually faithful.
+  \item Implemented U-Net and Attention U-Net segmentation plus DenseNet-121, EfficientNet-B0, and MobileNetV2 classification pipelines for four-class MRI analysis on the BRISC 2025 dataset in PyTorch.
+  \item Achieved 88.22\% test Dice, 79.74\% mIoU, and 99.61\% pixel accuracy with U-Net, while DenseNet-121 reached 97.50\% classification accuracy on held-out BRISC MRI samples from the four-category test set.
+  \item Ran 20 optimizer and learning-rate configurations and compared shared-encoder multi-task training with separate models, finding task-specific training improved both tasks and avoided task interference.
 \end{itemize}
 
-\entry{Machine Learning Engineer (Medical Imaging)}{Brain Tumor Segmentation \& Classification}{2026}
+\entry{NLP and Machine Learning Engineer}{News Classification and AI-Generated Text Detection}{2025 - 2026}
 \begin{itemize}
-  \item Implemented and compared U-Net, Attention U-Net, and three CNN classifiers on the BRISC 2025 MRI dataset in PyTorch.
-  \item Achieved 88.22\% test Dice, 79.74\% mIoU, 99.61\% pixel accuracy, and 97.50\% four-class classification accuracy on 860 unseen samples.
-  \item Ran a 20-config hyperparameter study; showed separate task-specific training beats joint multi-task learning by $\sim$5 points.
+  \item Built a reproducible 27-run benchmark of nine architectures and three preprocessing pipelines across 102,002 training headlines, spanning TF-IDF, recurrent networks, and BERT-Base under matched controls.
+  \item Reached 0.9376 macro-F1 with BERT-Base and 0.9214 with Bi-GRU trained in 18.7 seconds, showing that aggressive preprocessing helps shallow models but degrades pretrained transformers for this corpus.
+  \item Engineered 28 lexical, syntactic, readability, and distributional features for AI-text detection; Random Forest reached 97.40\% in-domain accuracy but exposed severe cross-generator failure.
 \end{itemize}
 
-\entry{NLP Engineer}{News Classification \& AI-Text Detection}{2025 -- 2026}
+\section{Selected Engineering Projects}
+\entry{Full-Stack and AI Engineering}{BRACU Vault and Polaris}{2026}
 \begin{itemize}
-  \item Built a 27-experiment benchmark (9 architectures $\times$ 3 preprocessing pipelines) on 102k headlines: 0.9376 macro-F1 (BERT-Base), 0.9214 (Bi-GRU in 19s).
-  \item Engineered 28 stylometric features with mRMR/RFE selection, reaching 97.40\% accuracy on HC3 and quantifying a cross-generator generalization gap.
+  \item Built BRACU Vault, a verified academic resource platform on Next.js, Cloudflare Workers, Hono, D1, R2, Drizzle, and Clerk, with university-email-gated uploads, moderation, and audit trails.
+  \item Designed a six-role, data-driven access model and controller-service-repository-policy API; atomic D1 activation and audit logging keep verification idempotent and traceable across privileged workflows.
+  \item Built Polaris using Gemini structured JSON, retrieval over a 60-document knowledge base, and a transparent logistic-regression model for explainable academic planning and what-if simulation.
+  \item Implemented offline heuristic fallbacks, Zod validation, subscription gating, MongoDB indexes, signed payment webhooks, and role-aware student, parent, partner, and admin views across paid tiers.
 \end{itemize}
 
-\entry{Full-Stack Engineer}{BRACU Vault $\cdot$ Polaris $\cdot$ E-GamerHub}{2025 -- 2026}
+\entry{Robotics and Real-Time Systems}{Vantage Arm Digital Twin and WattsUp Office Monitor}{2026}
 \begin{itemize}
-  \item Built BRACU Vault on Cloudflare's free tier (Workers + Hono, D1, R2, Clerk) with data-driven six-role RBAC and email-gated uploads.
-  \item Engineered Polaris, an AI academic strategist using Gemini structured-JSON output, RAG, and a transparent probability model with no-API-key fallback.
-  \item Developed E-GamerHub, a MERN platform with Socket.IO messaging, RBAC moderation, and Groq Llama 3 natural-language search.
+  \item Engineered a Three.js robotic-arm digital twin with damped-least-squares inverse kinematics, forward-kinematics verification, collision checks, joint limits, motion replay, and autonomous PIN entry.
+  \item Centralized manual, voice, Gemini-planned, replay, and PIN commands behind one deterministic safety gateway, with a Zustand state model and an ESP32 six-servo hardware concept for all control modes.
+  \item Built WattsUp as a simulated IoT energy monitor whose Express backend owns 15-device state, virtual time, usage, and alert rules shared by a live Three.js dashboard and Discord bot without client drift.
+  \item Synchronized controls over Socket.IO and exposed status, usage, simulation, turn-off, and alert commands through Discord.js, with stable IDs for deduplicated notifications across both interfaces.
 \end{itemize}
 
-\section{Research}
-\textbf{Obscrowd: Multi-Portrait Biometric Unlinkability under Generative Editing.} Working paper, 2026. Joint multi-face privacy protection via a teacher-student-refinement pipeline.
-
-\section{Selected Additional Projects}
+\entry{Android Application Development}{CSE489 Mobile Application Development}{2026}
 \begin{itemize}
-  \item Custom UNIX shell in C (pipes, redirection, chaining, signal handling); VSFSck file-system consistency checker.
-  \item OpenGL games from primitives (midpoint line algorithm, AABB collision); software quality prediction ML study.
+  \item Built two Kotlin Android applications covering Activities, Fragments, lifecycle state restoration, ViewBinding, Jetpack Navigation, responsive XML resources, and JUnit-tested business logic.
+  \item Implemented custom broadcasts, battery status handling, Glide image loading, matrix-based pinch zoom and panning, plus audio and video playback with lifecycle-aware resource cleanup for lifecycle safety.
 \end{itemize}
+
+\entry{Systems Programming}{Custom UNIX Shell and VSFSck}{2025}
+\begin{itemize}
+  \item Built C systems tools: a POSIX shell with fork/exec, pipes, redirection, chaining, history, and scoped SIGINT handling, plus an fsck-style checker for superblocks, bitmaps, inodes, and block references.
+\end{itemize}
+
+\section{Additional Projects}
+\projectline{E-GamerHub}{Co-developed a MERN social platform with Socket.IO messaging, RBAC moderation, per-game statistics, and Llama 3 intent extraction for natural-language player search.}
+\projectline{CampusSync}{Built a PHP and MySQL PWA with automated course ingestion, routine-based free-time matching, read-state notifications, and offline fallback support.}
+\projectline{UniBoard}{Built a PHP and MySQL campus noticeboard with verified club dashboards, event discovery filters, RSVP and calendar workflows, and engagement analytics.}
+\projectline{Cholo}{Designed the normalized MySQL schema and PHP backend for a university ride-sharing system with verified accounts, recurring trips, ratings, and trip management.}
+\projectline{OpenGL Games Trilogy}{Implemented three PyOpenGL and GLUT games using primitive rendering, midpoint line rasterization, AABB collision, and hand-written game loops.}
+\projectline{Software Quality Prediction}{Compared four classifiers and k-means/PCA on 1,600 code-metric samples, reporting the weak 0.4418 best weighted-F1 signal as the study's central finding.}
+\projectline{The Proposer's Dilemma}{Built a multi-round Python bargaining simulation that makes Nash equilibrium, backward induction, acceptance behavior, and changing incentives visible through score trajectories.}
+
+\section{Research Output}
+\textbf{Multi-Portrait Biometric Unlinkability under Generative Editing.} Working paper, 2026. Single-author manuscript in preparation; full methods and quantitative results remain restricted.
 
 \section{Education}
-\textbf{B.Sc. in Computer Science and Engineering}, BRAC University, Dhaka, Bangladesh \hfill CGPA 3.7+\\
-Relevant coursework: Machine Learning, Artificial Intelligence, Computer Graphics, Operating Systems, Database Systems, Algorithms.
+\textbf{B.Sc. in Computer Science and Engineering}\hfill 2023 - Present\\
+BRAC University, Dhaka, Bangladesh\hfill \textbf{CGPA 3.7+}\\
+Relevant coursework: Machine Learning, Artificial Intelligence, Mobile Application Development, Computer Graphics, Operating Systems, Database Systems, Data Structures and Algorithms.
 
-\section{Certifications}
-Understanding Machine Learning $\cdot$ Data Manipulation in Python $\cdot$ Cleaning Data in Python (DataCamp)
+\section{Teaching \& Leadership}
+\textbf{Private Tutor}, Dhaka, Bangladesh\hfill 2024 - Present\\
+Tutors programming in C, Java, and Python alongside data structures, algorithms, and mathematics; supports students with problem solving and university coursework.\\[0.2em]
+\textbf{Assistant Director}, BRACU E-Sports Club\hfill Leadership experience\\
+Supported club operations and esports event management at BRAC University.
+
+\section{Honors \& Certifications}
+Four-time scholarship recipient based on merit and prior academic results \enspace|\enspace Final-round participant, Bit Battles Programming Contest \enspace|\enspace Solved 233+ algorithmic problems on LeetCode \enspace|\enspace IELTS overall band 7\\
+Understanding Machine Learning, Data Manipulation in Python, and Cleaning Data in Python - DataCamp
 
 \end{document}

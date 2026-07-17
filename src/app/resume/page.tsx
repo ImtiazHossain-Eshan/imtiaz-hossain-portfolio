@@ -1,176 +1,188 @@
 import type { Metadata } from "next";
-import { resume, resumeScorecard } from "@/lib/resume";
-import { PrintButton } from "@/components/resume/print-button";
+import { resume } from "@/lib/resume";
 
 export const metadata: Metadata = {
   title: "Resume",
   description:
-    "The resume and CV of Imtiaz Hossain, AI Engineer and researcher: experience, skills, research, and an honest self-assessment.",
+    "Resume and CV of Imtiaz Hossain, an AI engineer and researcher focused on computer vision, NLP, deep learning, and full-stack systems.",
 };
-
-const downloads = [
-  { label: "Markdown", href: "/resume/imtiaz-hossain-resume.md" },
-  { label: "JSON Resume", href: "/resume/imtiaz-hossain-resume.json" },
-  { label: "LaTeX", href: "/resume/imtiaz-hossain-cv.tex" },
-  { label: "Cover letter", href: "/resume/cover-letter-template.md" },
-];
 
 export default function ResumePage() {
   return (
     <div className="pb-24 pt-36 md:pt-44">
-      {/* Toolbar */}
       <div className="wrap no-print mb-10 flex flex-wrap items-end justify-between gap-6">
         <div>
           <p className="label-mono mb-4">resume / cv</p>
-          <h1 className="text-4xl font-medium tracking-tight text-ink sm:text-5xl">
-            The formal record
-          </h1>
+          <h1 className="text-4xl font-medium tracking-tight text-ink sm:text-5xl">Resume</h1>
         </div>
-        <div className="flex flex-wrap items-center gap-2">
-          <PrintButton />
-          {downloads.map((d) => (
-            <a
-              key={d.label}
-              href={d.href}
-              download
-              className="rounded-full border border-line-bright px-4 py-2.5 text-[13px] text-ink transition-colors duration-300 hover:border-accent hover:text-accent"
-            >
-              {d.label}
-            </a>
-          ))}
-        </div>
+        <a
+          href="/resume/imtiaz-hossain-resume.pdf"
+          download
+          className="rounded-full bg-ink px-5 py-2.5 text-[13px] font-medium text-bg transition-colors duration-300 hover:bg-accent"
+        >
+          Download PDF
+        </a>
       </div>
 
-      {/* Sheet */}
       <div className="wrap">
-        <article className="print-sheet mx-auto max-w-3xl rounded-2xl border border-line bg-surface p-8 md:p-12">
-          {/* Header */}
-          <header className="border-b border-line pb-6">
-            <h2 className="text-3xl font-semibold tracking-tight text-ink">{resume.name}</h2>
-            <p className="print-accent mt-1 text-sm text-accent">{resume.title}</p>
-            <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-[12.5px] text-dim">
+        <article className="mx-auto max-w-4xl rounded-sm border border-line bg-[#fffdfa] p-7 text-[#171717] md:p-12">
+          <header className="border-b border-[#cfcfc8] pb-5">
+            <h2 className="text-3xl font-semibold tracking-tight text-[#111]">{resume.name}</h2>
+            <p className="mt-1 text-[15px] font-medium text-[#174a63]">{resume.title}</p>
+            <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-[12.5px] text-[#444]">
               <span>{resume.location}</span>
-              <a href={`mailto:${resume.email}`}>{resume.email}</a>
-              <a href={resume.links.github}>github.com/{site_handle(resume.links.github)}</a>
-              <a href={resume.links.scholar}>Google Scholar</a>
-              <a href={resume.links.portfolio}>{clean(resume.links.portfolio)}</a>
+              <a className="underline-offset-2 hover:underline" href={`tel:${resume.phone.replace(/\s/g, "")}`}>
+                {resume.phone}
+              </a>
+              <a className="underline-offset-2 hover:underline" href={`mailto:${resume.email}`}>
+                {resume.email}
+              </a>
+              <a className="underline-offset-2 hover:underline" href={resume.links.portfolio}>
+                {clean(resume.links.portfolio)}
+              </a>
+              <a className="underline-offset-2 hover:underline" href={resume.links.github}>
+                GitHub
+              </a>
+              <a className="underline-offset-2 hover:underline" href={resume.links.linkedin}>
+                LinkedIn
+              </a>
+              <a className="underline-offset-2 hover:underline" href={resume.links.scholar}>
+                Google Scholar
+              </a>
             </div>
           </header>
 
-          {/* Summary */}
           <Section title="Summary">
-            <p className="text-[13.5px] leading-relaxed text-dim">{resume.summary}</p>
+            <p>{resume.summary}</p>
           </Section>
 
-          {/* Skills */}
           <Section title="Technical Skills">
-            <dl className="space-y-1.5">
-              {Object.entries(resume.skills).map(([group, items]) => (
-                <div key={group} className="grid grid-cols-[9rem_1fr] gap-2 text-[12.5px]">
-                  <dt className="print-accent font-medium text-accent">{group}</dt>
-                  <dd className="text-dim">{items.join(" · ")}</dd>
+            <dl className="space-y-3">
+              {resume.skills.map((skill) => (
+                <div key={skill.group} className="grid gap-1 text-[13px] sm:grid-cols-[12rem_1fr]">
+                  <dt className="font-semibold text-[#222]">{skill.group}</dt>
+                  <dd>
+                    <ul className="space-y-1">
+                      {skill.lines.map((line) => (
+                        <li key={line}>{line}</li>
+                      ))}
+                    </ul>
+                  </dd>
                 </div>
               ))}
             </dl>
           </Section>
 
-          {/* Experience */}
-          <Section title="Engineering & Research Experience">
-            <div className="space-y-5">
-              {resume.experience.map((exp) => (
-                <div key={exp.role}>
-                  <div className="flex items-baseline justify-between gap-3">
-                    <h4 className="text-[14px] font-semibold text-ink">{exp.role}</h4>
-                    <span className="shrink-0 font-mono text-[11px] text-faint">{exp.period}</span>
-                  </div>
-                  <p className="print-accent text-[12.5px] text-accent">{exp.org}</p>
-                  <ul className="mt-2 space-y-1.5">
-                    {exp.bullets.map((b, i) => (
-                      <li key={i} className="flex gap-2 text-[12.5px] leading-relaxed text-dim">
-                        <span className="print-accent mt-[0.35em] text-accent">▸</span>
-                        <span>{b}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
+          <Section title="Research Experience">
+            <ExperienceList entries={resume.researchExperience} />
           </Section>
 
-          {/* Research */}
-          <Section title="Research">
-            {resume.research.map((r) => (
-              <div key={r.title} className="text-[12.5px]">
-                <p className="font-medium text-ink">{r.title}</p>
-                <p className="text-faint">
-                  {r.venue}, {r.year}. {r.note}
-                </p>
-              </div>
-            ))}
+          <Section title="Selected Engineering Projects">
+            <ExperienceList entries={resume.engineeringProjects} />
           </Section>
 
-          {/* Selected projects */}
-          <Section title="Selected Additional Projects">
-            <ul className="grid gap-1.5 sm:grid-cols-2">
-              {resume.projectsHighlight.map((p) => (
-                <li key={p} className="flex gap-2 text-[12.5px] text-dim">
-                  <span className="print-accent text-accent">▸</span>
-                  {p}
+          <Section title="Additional Projects">
+            <ul className="space-y-2">
+              {resume.additionalProjects.map((project) => (
+                <li key={project.name}>
+                  <span className="font-semibold text-[#111]">{project.name}:</span>{" "}
+                  {project.description}
                 </li>
               ))}
             </ul>
           </Section>
 
-          {/* Education + certs */}
-          <div className="mt-6 grid gap-6 sm:grid-cols-2">
+          <Section title="Research Output">
+            {resume.research.map((research) => (
+              <div key={research.title}>
+                <p className="font-semibold text-[#111]">{research.title}</p>
+                <p className="text-[#555]">
+                  {research.venue}, {research.year}. {research.note}
+                </p>
+              </div>
+            ))}
+          </Section>
+
+          <div className="mt-6 grid gap-6 md:grid-cols-2">
             <Section title="Education" flush>
-              <p className="text-[13px] font-semibold text-ink">{resume.education.degree}</p>
-              <p className="print-accent text-[12.5px] text-accent">{resume.education.school}</p>
-              <p className="text-[12px] text-faint">
-                {resume.education.location} · {resume.education.detail}
+              <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                <p className="font-semibold text-[#111]">{resume.education.degree}</p>
+                <span className="text-[12px] text-[#555]">{resume.education.period}</span>
+              </div>
+              <p className="font-medium text-[#174a63]">{resume.education.school}</p>
+              <p className="text-[#555]">
+                {resume.education.location} - {resume.education.detail}
+              </p>
+              <p className="mt-1">
+                Relevant coursework: {resume.education.coursework.join(", ")}.
               </p>
             </Section>
+            <Section title="Teaching & Leadership" flush>
+              <div className="space-y-3">
+                {resume.teachingAndLeadership.map((item) => (
+                  <div key={item.role}>
+                    <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                      <p className="font-semibold text-[#111]">{item.role}</p>
+                      <span className="text-[12px] text-[#555]">{item.period}</span>
+                    </div>
+                    <p className="font-medium text-[#174a63]">{item.org}</p>
+                    <p>{item.description}</p>
+                  </div>
+                ))}
+              </div>
+            </Section>
+          </div>
+
+          <div className="mt-6 grid gap-6 md:grid-cols-2">
+            <Section title="Honors" flush>
+              <ul className="list-disc space-y-1 pl-5">
+                {resume.honors.map((honor) => (
+                  <li key={honor}>{honor}</li>
+                ))}
+              </ul>
+            </Section>
             <Section title="Certifications" flush>
-              <ul className="space-y-1">
-                {resume.certifications.map((c) => (
-                  <li key={c.title} className="text-[12.5px] text-dim">
-                    {c.title} <span className="text-faint">· {c.issuer}</span>
+              <ul className="list-disc space-y-1 pl-5">
+                {resume.certifications.map((certification) => (
+                  <li key={certification.title}>
+                    {certification.title} - {certification.issuer}
                   </li>
                 ))}
               </ul>
             </Section>
           </div>
         </article>
-
-        {/* Self-assessment (screen only) */}
-        <section className="no-print mx-auto mt-16 max-w-3xl" aria-label="Self-assessment">
-          <p className="label-mono mb-6">honest self-assessment / scored as a recruiter would</p>
-          <div className="grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-2">
-            {resumeScorecard.scores.map((s) => (
-              <div key={s.label} className="bg-surface px-5 py-4">
-                <div className="mb-2 flex items-center justify-between">
-                  <span className="text-[13px] text-dim">{s.label}</span>
-                  <span className="font-mono text-sm text-ink">{s.score}</span>
-                </div>
-                <div className="h-1 overflow-hidden rounded-full bg-raised">
-                  <div className="h-full rounded-full bg-accent" style={{ width: `${s.score}%` }} />
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="mt-8">
-            <p className="label-mono mb-4">where I would strengthen this next</p>
-            <ul className="space-y-2.5">
-              {resumeScorecard.recommendations.map((rec, i) => (
-                <li key={i} className="flex gap-3 text-[14px] leading-relaxed text-dim">
-                  <span className="label-mono mt-0.5 shrink-0">{String(i + 1).padStart(2, "0")}</span>
-                  {rec}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
       </div>
+    </div>
+  );
+}
+
+function ExperienceList({
+  entries,
+}: {
+  entries: ReadonlyArray<{
+    role: string;
+    org: string;
+    period: string;
+    bullets: readonly string[];
+  }>;
+}) {
+  return (
+    <div className="space-y-5">
+      {entries.map((entry) => (
+        <div key={`${entry.role}-${entry.org}`}>
+          <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+            <h4 className="text-[14px] font-semibold text-[#111]">{entry.role}</h4>
+            <span className="text-[12px] text-[#555]">{entry.period}</span>
+          </div>
+          <p className="text-[12.5px] font-medium text-[#174a63]">{entry.org}</p>
+          <ul className="mt-2 list-disc space-y-1.5 pl-5">
+            {entry.bullets.map((bullet) => (
+              <li key={bullet}>{bullet}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
     </div>
   );
 }
@@ -186,15 +198,14 @@ function Section({
 }) {
   return (
     <section className={flush ? "" : "mt-6"}>
-      <h3 className="label-mono mb-2.5 border-b border-line pb-1">{title}</h3>
-      {children}
+      <h3 className="mb-2.5 border-b border-[#cfcfc8] pb-1 text-[12px] font-bold uppercase tracking-[0.12em] text-[#174a63]">
+        {title}
+      </h3>
+      <div className="text-[13px] leading-relaxed text-[#333]">{children}</div>
     </section>
   );
 }
 
 function clean(url: string) {
   return url.replace(/^https?:\/\//, "").replace(/\/$/, "");
-}
-function site_handle(url: string) {
-  return url.split("/").pop() ?? url;
 }
