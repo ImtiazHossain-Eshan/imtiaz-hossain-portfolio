@@ -1,0 +1,115 @@
+---
+title: Vantage Arm Digital Twin
+slug: dry-run
+category: systems
+tagline: A browser-based robotic-arm digital twin with shared robot state, DLS inverse kinematics, voice control, Gemini agentic planning, collision safety, motion replay, and autonomous PIN entry.
+summary: A React and Three.js digital twin for the Vantage Robotics stylus arm, built around one authoritative robot state, one validated motion controller, and multiple safe control modes for a hackathon robotics challenge.
+period: 2026
+featured: 6.2
+status: shipped
+cover: /assets/projects/dry-run/arm-dashboard.webp
+stack:
+  - React 19
+  - TypeScript
+  - Vite
+  - Three.js
+  - React Three Fiber
+  - URDF Loader
+  - Zustand
+  - Gemini
+  - Vitest
+  - Wokwi
+links:
+  github: https://github.com/ImtiazHossain-Eshan/Dry_Run
+metrics:
+  - label: control modes
+    value: "5"
+    detail: manual, voice, agentic, PIN, replay
+  - label: motion core
+    value: DLS IK
+    detail: FK-verified joint targets
+  - label: safety
+    value: gated
+    detail: limits, collisions, ownership, E-stop
+  - label: hardware plan
+    value: 6 servos
+    detail: ESP32 Wokwi schematic
+gallery:
+  - src: /assets/projects/dry-run/arm-key-contact.webp
+    caption: Verified stylus contact on a keypad target
+  - src: /assets/projects/dry-run/arm-side-view.webp
+    caption: Side view of the arm, keypad, reach envelope, and manual controls
+architecture:
+  - { id: user, label: "User Intent", sub: "manual / voice / PIN", col: 0, row: 1, to: [schema] }
+  - { id: gemini, label: "Gemini Planner", sub: "strict command JSON", col: 0, row: 0, to: [schema] }
+  - { id: schema, label: "Command Schema", sub: "deterministic validation", col: 1, row: 1, to: [gateway] }
+  - { id: gateway, label: "Safety Gateway", sub: "E-stop + ownership", col: 2, row: 1, to: [controller] }
+  - { id: controller, label: "Motion Controller", sub: "smooth execution", col: 3, row: 1, to: [ik] }
+  - { id: ik, label: "IK / FK Pipeline", sub: "limits + verification", col: 4, row: 1, to: [store] }
+  - { id: store, label: "Robot Store", sub: "authoritative state", col: 5, row: 1, to: [scene] }
+  - { id: scene, label: "Three.js Scene", sub: "arm + dashboard", col: 6, row: 1, to: [] }
+---
+
+## The challenge
+
+Dry_Run started from a robotics prompt: make a Vantage Robotics stylus arm visible,
+controllable, and testable before any real hardware is connected. The implementation is a
+browser-based digital twin where the robot, keypad, motion state, safety checks, and control
+panels all run as one coherent simulation.
+
+The important design choice is that every mode touches the same robot. Manual jog, voice
+commands, agentic plans, autonomous PIN entry, and replay do not maintain separate ideas of
+where the arm is. They all propose structured motion, pass through the same validation
+boundary, and update the same Zustand-backed robot state.
+
+## One controller for every control surface
+
+The arm can be moved directly through Cartesian targets, joystick jogs, keyboard jogs,
+voice commands, a Gemini-powered planner, an autonomous PIN state machine, or a recorded
+motion replay. That sounds like many features, but the runtime is intentionally narrow:
+every surface is converted into an explicit command or target, then sent through
+`ArmMotionController`.
+
+That controller owns the real robotics path: workspace validation, damped-least-squares
+inverse kinematics, joint-limit checks, forward-kinematics verification, collision tests,
+and smooth joint-space interpolation. Keeping the pipeline centralized means a feature added
+for one mode becomes a safety property for all modes.
+
+## Agentic, but not trusted with safety
+
+The agentic mode uses Gemini to translate free-form instructions into strict JSON commands.
+The model never executes motion directly. Its output is re-parsed, schema-checked, policy
+checked, and then passed through the same safety gateway as hand-authored commands.
+
+That distinction matters. The LLM is useful for intent translation, but the deterministic
+robotics layer remains the authority on reachability, limits, collisions, emergency stop
+state, and command ownership.
+
+## Autonomous PIN entry
+
+The PIN flow accepts exactly six digits, maps each digit to the configured 3D keypad
+position, and creates approach, contact, hold, and retract waypoints for each press. Before
+the arm starts, the system preflights the whole sequence so an unreachable key fails early
+instead of halfway through a demo.
+
+The state machine also supports pause, resume, stop, and emergency stop. Those controls are
+not bolted onto the UI; they interact with the same ownership lock and motion cancellation
+logic used by manual control and replay.
+
+## Safety in the scene
+
+Collision checking uses simplified link capsules, obstacle boxes, safety zones, and reach
+envelopes. It is not an industrial motion planner, but it is the right fidelity for a
+browser digital twin: enough geometry to catch unsafe paths, visualize the failure, and
+teach the user why the command was rejected.
+
+The Three.js scene is only the view. Meshes follow the store instead of becoming a second
+robot model, which keeps the dashboard, joint readouts, stylus-tip coordinates, and rendered
+arm synchronized at all times.
+
+## Hardware bridge
+
+The repository also includes a Wokwi ESP32 DevKit V1 schematic for a six-servo arm layout.
+That makes the project more than a visual mock: the simulated joint model, command pipeline,
+and safety story have a concrete hardware direction even though the current app does not
+send commands to a physical robot.

@@ -1,0 +1,116 @@
+---
+title: WattsUp Office Energy Monitor
+slug: wattsup-office-monitor
+category: fullstack
+tagline: A real-time office lights-and-fans monitor with a live 3D dashboard, shared Node backend, virtual office clock, alert engine, and Discord bot control surface.
+summary: A full-stack simulated IoT system where one Express and Socket.IO backend owns all room/device state, feeds a React Three Fiber dashboard, and powers a Discord bot for live status, usage, controls, and proactive energy alerts.
+period: 2026
+featured: 6.3
+status: shipped
+cover: /assets/projects/wattsup/office-dashboard.webp
+stack:
+  - Node.js
+  - Express
+  - Socket.IO
+  - React
+  - Vite
+  - Three.js
+  - React Three Fiber
+  - Discord.js
+  - REST API
+  - Wokwi
+links:
+  github: https://github.com/ImtiazHossain-Eshan/WattsUp-Lights-Fans-Discord
+  demo: https://wokwi.com/projects/468606904510667777
+metrics:
+  - label: devices
+    value: "15"
+    detail: 3 rooms, 6 fans, 9 lights
+  - label: realtime
+    value: Socket.IO
+    detail: dashboard sync without refresh
+  - label: bot surface
+    value: "7 commands"
+    detail: status, rooms, usage, alerts, controls
+  - label: alert rules
+    value: "2"
+    detail: after-hours and long-running rooms
+gallery:
+  - src: /assets/projects/wattsup/room-controls.webp
+    caption: Per-room device cards with Auto/Manual modes and rocker controls
+  - src: /assets/projects/wattsup/system-architecture.webp
+    caption: Interactive architecture view tracing backend, dashboard, and bot flows
+  - src: /assets/projects/wattsup/discord-usage.webp
+    caption: Discord bot usage replies backed by the same live backend state
+  - src: /assets/projects/wattsup/discord-alerts.webp
+    caption: Proactive after-hours alert posts with stable deduped alert IDs
+  - src: /assets/projects/wattsup/hardware-schematic.webp
+    caption: ESP32 one-room hardware concept for switch inputs and LED indicators
+architecture:
+  - { id: sim, label: "Simulator", sub: "auto devices", col: 0, row: 0, to: [backend] }
+  - { id: manual, label: "Manual Control", sub: "dashboard + bot", col: 0, row: 2, to: [backend] }
+  - { id: backend, label: "Express Backend", sub: "single source of truth", col: 1, row: 1, to: [usage, socket, rest] }
+  - { id: usage, label: "Usage + Alerts", sub: "watts, kWh, rules", col: 2, row: 0, to: [socket, rest] }
+  - { id: socket, label: "Socket.IO", sub: "live push", col: 3, row: 0, to: [dashboard] }
+  - { id: rest, label: "REST API", sub: "fresh reads + PATCH", col: 3, row: 2, to: [bot] }
+  - { id: dashboard, label: "3D Dashboard", sub: "React + Three.js", col: 4, row: 0, to: [] }
+  - { id: bot, label: "Discord Bot", sub: "commands + alerts", col: 4, row: 2, to: [] }
+---
+
+## The problem
+
+Small offices waste power in boring ways: fans and lights are left on, nobody knows which
+room is responsible, and after-hours waste only becomes visible when the bill arrives.
+WattsUp turns that invisible state into two live views: a 3D office dashboard for the
+browser and a Discord bot for quick remote checks.
+
+The project uses simulated device data, not people data. The fixed office model has three
+rooms, each with two fans and three lights. Fans draw 60 W, lights draw 15 W, and the whole
+office tops out at 495 W.
+
+## One source of truth
+
+The core rule is that the dashboard and bot never invent state. A Node and Express backend
+owns the in-memory device store, room summaries, usage totals, simulation state, virtual
+clock, and alerts. The React dashboard receives live updates over Socket.IO, while the
+Discord bot reads the same state through REST.
+
+Manual control follows the same rule. Clicking a fan or light in the 3D scene, flipping a
+rocker switch in a room card, or turning off a room sends a backend control request first.
+The UI only updates after the backend rebroadcasts the new snapshot, so every client agrees.
+
+## A dashboard that shows the office
+
+The dashboard renders a procedural low-poly office in Three.js, with different room
+identities for the lounge and two work rooms. Ceiling fans spin when on, lamps glow with real
+point lights, and hovering a device shows room, status, watts, mode, and last-changed data.
+
+Every device also has a detailed card with Auto and Manual modes. The simulator nudges only
+Auto devices, so manual decisions are respected until the user resets devices back to Auto.
+
+## Time controls and alert rules
+
+WattsUp has one virtual office clock. Timestamps, alert age, and estimated kWh all derive
+from that clock, so the dashboard and bot stay consistent even when the demo jumps to 6 PM
+or runs at 1800x speed.
+
+The alert engine covers two concrete rules: devices on outside 9 AM-5 PM and rooms with all
+five devices on for more than two hours. Alerts use stable IDs so the Discord bot can post
+new warnings without spamming repeats.
+
+## Discord as the second interface
+
+The bot supports status, room, usage, alerts, simulation, turnoff, and help commands. It can
+answer "what is on right now?", break down watts by room, turn everything off, pause the
+simulator, and post proactive alert embeds to a configured channel.
+
+Because it reads the same backend as the dashboard, Discord is not a screenshot of the app;
+it is a second operational surface over the same system.
+
+## Hardware concept
+
+The hardware schematic models one representative room with an ESP32, five switch inputs,
+five LED indicators, and an optional current-sensor path. It is intentionally a concept
+layer for the simulated project, but it makes the control story realistic: a real deployment
+would repeat the same input/indicator block per room and let the backend remain the shared
+state authority.

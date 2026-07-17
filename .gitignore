@@ -47,6 +47,7 @@ AGENTS.md
 .cursor/
 .cursorrules
 .aider*
+.codex/config.toml
 
 # typescript
 *.tsbuildinfo
